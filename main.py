@@ -31,7 +31,7 @@ def operations(message: telebot.types.Message):
 @bot.message_handler(content_types=['text'])
 def get_price(message: telebot.types.Message):
     try:
-        message.text= message.text.lower()
+        message.text= message.text.lower()  #Если пользователь ввел какие то буквы большие, то выравниваем
         values = message.text.split(' ')
         quote, base, amount = values
         total_base=CryptoConverter.convert(quote, base, amount)
@@ -45,8 +45,12 @@ def get_price(message: telebot.types.Message):
         else:
             bot.reply_to(message, f'Не удалось обработать команду\n{e} \n 💵 Нажми на /valuta что бы увидеть список валют 💵')
     else:
-        text = f'Цена {amount} {quote} в {base} = {total_base*amount}'
-        bot.send_message(message.chat.id, text)
+        if amount<0:                                                    #Проверяем что пользователь ввел не отрицательное значение
+            bot.reply_to(message,'Вы ввели отрицательное значение')
+        else:
+            text = f'Цена {amount} {quote} в {base} = {total_base*amount}'
+            bot.send_message(message.chat.id, text)
+       
 
 
 
@@ -62,16 +66,19 @@ def handle_docs_audio(message):
     bot.reply_to(message, 'Пробовали заниматься вокалом? Думаю, что у вас получится')
 
 
+# Ответ на анимацию
 @bot.message_handler(content_types=['animation'])
 def say_lmao(message: telebot.types.Message):
     bot.reply_to(message, '🤪')
 
 
+# Ответ на стикер
 @bot.message_handler(content_types=['sticker'])
 def say_lmao(message: telebot.types.Message):
     bot.reply_to(message, '🐙')
 
 
+# Ответ на видео
 @bot.message_handler(content_types=['video'])
 def say_lmao(message: telebot.types.Message):
     bot.reply_to(message, 'NICE vidos')
