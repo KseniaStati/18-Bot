@@ -18,3 +18,5 @@ keys = {
 }
 
 имя в телеграмме @Kurs_obmennik_bot
+
+Бот запущен на https://www.pythonanywhere.com и должен всегда быть доступным
